@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                   		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                   		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<context:annotation-config></context:annotation-config>
+
+	<bean name="PropertyPlaceHolder"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties">
+			<value>
+				bind.address=0.0.0.0
+				tcp.port=8080
+				tls.server=true
+				tls.server.keystore.filepath=fjork
+				tls.server.keystore.password=
+				tls.server.key.password=
+				tls.client=false
+				boss.thread.count=1
+				worker.thread.count=4
+				so.keepalive=true
+				so.backlog=10000
+				debugConsole=false
+			</value>
+		</property>
+		<property name="locations">
+			<list>
+				<value>classpath:ipcd.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="CustomEditorConfigurer"
+		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.net.InetSocketAddress" value="com.iris.ipcd.server.spring.InetSocketAddressEditor" />
+			</map>
+		</property>
+	</bean>
+
+	<!-- Server definition -->
+	<bean id="Server" class="com.iris.ipcd.server.IpcdServer"
+	    p:socketBindAddress="${bind.address}"
+	    p:portNumber="${tcp.port}"
+		p:bossGroup-ref="bossGroup" 
+		p:workerGroup-ref="workerGroup"
+		p:channelInitializer-ref="ipcd10ChannelInitializer"
+		p:channelOptions-ref="tcpChannelOptions"
+		p:debugConsole="${debugConsole}" />
+	
+	<!-- If you prefer to use the system's default keystore file path and password as encoded
+	     in System.getProperties("keystore.file.path") and System.getProperties("keystore.file.password")
+	     then remove the constructor args below to call the no argument ctor -->
+	<bean id="ipcdServerTlsContext" class="com.iris.ipcd.server.netty.IpcdServerTlsContext">
+	     <constructor-arg index="0" value="${tls.server}" />
+	    <constructor-arg index="1" value="${tls.server.keystore.filepath}" />
+	    <constructor-arg index="2" value="${tls.server.keystore.password}" />
+	    <constructor-arg index="3" value="${tls.server.key.password}" />
+	</bean>
+	
+	<bean id="ipcd10ChannelInitializer" class="com.iris.ipcd.server.netty.Ipcd10ChannelInitializer">
+	    <constructor-arg index="0" ref="ipcdServerTlsContext" />
+	</bean>
+	
+	<!--  Channel socket options -->
+	<util:map id="tcpChannelOptions" map-class="java.util.HashMap">
+		<entry>
+			<key><util:constant static-field="io.netty.channel.ChannelOption.SO_KEEPALIVE" /></key>
+			<value type="java.lang.Boolean">${so.keepalive}</value>
+		</entry>
+		<entry>
+			<key><util:constant static-field="io.netty.channel.ChannelOption.SO_BACKLOG" /></key>
+			<value type="java.lang.Integer">${so.backlog}</value>
+		</entry>
+	</util:map>
+
+	<!--  Thread groups and factories -->
+	<bean id="bossGroup" class="io.netty.channel.nio.NioEventLoopGroup"
+		destroy-method="shutdownGracefully">
+		<constructor-arg index="0" value="${boss.thread.count}" />
+		<constructor-arg index="1" ref="bossThreadFactory" />
+	</bean>
+	<bean id="workerGroup" class="io.netty.channel.nio.NioEventLoopGroup"
+		destroy-method="shutdownGracefully">
+		<constructor-arg index="0" value="${worker.thread.count}" />
+		<constructor-arg index="1" ref="workerThreadFactory" />
+	</bean>
+	<bean id="bossThreadFactory" class="com.iris.ipcd.server.thread.DaemonThreadFactory">
+		<constructor-arg index="0" value="ipcds-boss" />
+	</bean>
+	<bean id="workerThreadFactory" class="com.iris.ipcd.server.thread.DaemonThreadFactory">
+		<constructor-arg index="0" value="ipcds-worker" />
+		
+	</bean>
+</beans>

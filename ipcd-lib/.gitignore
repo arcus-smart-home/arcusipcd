@@ -1,0 +1,16 @@
+# OS and editor files
+RemoteSystemsTempFiles
+*.swp
+
+# Build dirs
+/build
+
+# Gradle files
+.gradle
+
+# Eclipse files
+.metadata
+.classpath
+.project
+.settings
+/bin

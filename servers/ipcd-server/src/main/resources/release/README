@@ -1,0 +1,223 @@
+IPCD Server
+
+
+----------------
+Introduction
+----------------
+This stand-alone IPCD server is well suited to test against while developing
+IPCD agents.  
+
+After pointing an agent to the server, you can use the server's console to inspect the 
+IPCD messages sent between the agent and the server.  You can also use the console to
+send commands to a connected agent.
+
+To use this software, you must have a Java 7 runtime environment installed.
+
+See the sections below for information on how to configure and run the server and 
+how to use the console.
+
+
+
+----------------
+Configure
+----------------
+Configuration options are located in config/ipcd.properties.
+
+To control the address and port the server will bind to, set the bind.address and
+tcp.port properties.  By default these are set to bind to any interface on port 8080:
+
+bind.address=0.0.0.0
+tcp.port=8080
+
+By default the server is set to use plaintext sockets (http and ws rather than https 
+and wss).  Configuration options allow you to enable TLS, to set the location and 
+password of a Java keystore containing your server certificate, and to set a key
+password if your certificate requires one.:
+
+tls.server=false
+tls.server.keystore.filepath=keystore.jks
+tls.server.keystore.password=password
+tls.server.key.password=keypass
+
+To test with TLS, set tls.server to true and generate a certificate as follows:
+cd ./config
+
+keytool -genkey -keyalg RSA -alias myplatform -keystore keystore.jks -storepass password -validity 360 -keysize 2048
+
+Where -keystore must agree with tls.server.keystore.filepath and -storepass must
+agree with tls.server.keystore.password.
+
+You will be prompted by the Java Keytool utility to enter cn, ou, o, l, st, and c and
+finally prompted to enter a key password.  The key password must agree with 
+tls.server.key.password.
+
+Remember, to give the agent a ws:// URL when tls.server is false.  When using TLS
+the agent will require a wss:// URL.
+
+
+
+----------------
+Run
+----------------
+To run the application, execute the run_server bash or batch script:
+
+./run_server.sh
+
+Please verify your environment is configured to use version 1.7 or above of the 
+Java VM.
+
+
+----------------
+Console
+----------------
+Once the server has started you should connect at least one device.  After a device is
+connected you can use the console to send it commands.  Because the server will
+allow multiple devices to be connected at the same time, you have to tell the console
+which device you want to interact with by using the device command.  See below for
+the list of commands accepted by the console:
+
+
+help [command]
+
+Commands are [Device, GetParameterValues, SetParameterValues, GetParameterInfo, GetDeviceInfo,
+GetReportConfiguration, SetReportConfiguration, GetEventConfiguration, SetEventConfiguration, 
+Download, Upload, Reboot, FactoryReset, Leave, Help].  For more information on a command, enter 
+help [command].
+Examples:
+  help
+  help SetParameterValues
+			
+
+
+
+device <vendor> <model> <serialnum>
+
+Device is a console-only command (not part of the IPCD protocol) that selects a device to
+interact with on the console.  After specifying a device, all protocol commands entered 
+into the console are sent to that device.  An error will be returned if no device with the
+provided identity is currently connected
+Examples:
+  Device BlackBox Multisensor2 00049B3C7A05
+			
+
+
+
+GetParameterValues [txnid=id] [parameter1] [parameter2] ... [parameterN]
+
+Sends a GetParameterValues command to the currently selected device.  Parameters to
+retrieve may be specified as additional arguments.  If no parameters are specified
+then all parameters should be returned (see the IPCD specification).
+Examples:
+  GetParameterValues
+  GetParameterValues temperature relhumidity units
+			
+
+
+
+SetParameterValues [txnid=id] [parameter1=value1] [parameter2=value2] ... [parameterN=valueN]
+
+Sends a SetParameterValues command to the currently selected device.  Parameter
+name=value pairs may be specified as additional arguments.  If no parameters are specified
+then all parameters should be returned (see the IPCD specification).  The console will attempt
+to determine the type of the value but if a value is surrounded by quotes, then it will be
+sent as a string.
+Examples:
+  SetParameterValues temperature=20.0
+  SetParameterValues temperature=20.0 units=C
+			
+
+
+
+GetParameterInfo [txnid=id]
+
+Sends a GetParameterInfo command to the currently selected device.
+Examples:
+  GetParameterInfo
+			
+
+
+
+GetDeviceInfo [txnid=id]
+
+Sends a GetDeviceInfo command to the currently selected device.
+Examples:
+  GetDeviceInfo
+			
+
+
+
+GetReportConfiguration [txnid=id]
+
+Sends a GetReportConfiguration command to the currently selected device.
+Examples:
+  GetReportConfiguration
+
+
+
+
+SetReportConfiguration [txnid=id] [report_interval] [parameter1] ... [parameterN]
+
+Sends a GetReportConfiguration command to the currently selected device.  If the
+first argument is a number, the console interprets that as a report interval
+in seconds.  Otherwise, all other arguments are assumed to be parameters that
+should be included in subsequent reports from the device (see the IPCD
+specification.)
+Examples:
+  SetReportConfiguration 300
+  SetReportConfiguration 60 temperature relhumidity
+  SetReportConfiguration relhumidity
+			
+
+
+
+GetEventConfiguration [txnid=id]
+
+Sends a GetEventConfiguration command to the currently selected device.
+Examples:
+  GetEventConfiguration
+
+
+
+
+SetEventConfiguration [txnid=id] event1,event2,eventN parameter1=valchange_event[:valchange_value]
+
+Sends a SetEventConfiguration command to the currently selected device.  The
+first argument must be a comma-delimited set of events to enable which is a
+subset of [onBoot, onConnect onDownloadComplete, onDownloadFailed, onUpdate,
+onFactoryReset, onValueChange].  Each subsequent argument represents the set of
+value change thresholds for a given parameter where valid value change events
+may include [onChange, onChangeBy, onEquals, onLessThan, onGreaterThan].  Only
+those events supported by the device and only those change change thresholds
+supported by the specific parameter will be accepted (see the IPCD specification)
+Examples:
+  SetEventConfiguration onBoot,onConnect,onUpdate,onValueChange temparature=onLessThan:5,onGreaterThan:23 relhumidity=onChange
+
+
+
+
+Download [txnid=id] url
+
+Sends a Download command to the currently selected device which causes it to
+fetch the file at the given URL." +
+Examples:
+  Download https://myservice.com/images/BlackBox/Multisensor2/2.03.bin
+			
+
+
+
+Reboot [txnid=id]
+
+Sends a Reboot command to the currently selected device.
+Examples:
+  Reboot
+
+
+
+
+FactoryReset [txnid=id]
+Sends a FactoryReset command to the currently selected device.
+Examples:
+  FactoryReset
+
+  
+

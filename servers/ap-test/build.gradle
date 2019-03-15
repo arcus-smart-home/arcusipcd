@@ -1,0 +1,64 @@
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.1.RELEASE")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+apply plugin: 'application'
+
+dependencies {
+	compile ("org.bouncycastle:bcprov-jdk15on:1.59")
+}
+
+mainClassName = 'com.iris.server.apmode.Ap'
+
+bootJar {
+	baseName = 'ap-test'
+	version =  '0.0.6'
+}
+task copyLibs(type: Copy, dependsOn: 'build') {
+	from configurations.compile
+	into 'build/release/lib'
+}
+
+task copyConfig(type: Copy, dependsOn: 'copyLibs') {
+	from('src/main/resources') {
+		include '*.properties'
+		include 'devicekey*'
+	}
+	into 'build/release/config'
+}
+
+task copyReleaseRes(type: Copy, dependsOn: 'copyConfig') {
+	from('src/main/resources/release') {
+		include 'README.md'
+		include '*.sh'
+		include '*.bat'
+	}
+	into 'build/release'
+}
+
+task release (type: Copy, dependsOn: 'copyReleaseRes') {
+	from libsDir
+	into 'build/release/lib'
+}
+
+repositories {
+	mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	compile("org.springframework.boot:spring-boot-starter-web")
+}

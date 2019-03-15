@@ -1,0 +1,446 @@
+{
+	"vendor":"A.O. Smith",
+	"model":"B1.00",
+	"sn":"1234567890",
+	"ipcdver":"0.3",
+	"connection":"persistent",
+	"connectUrl":"wss://localhost:8084/ipcd/1.0",
+	"uptime":1402006779,
+	"actions":[
+		"Report",
+		"Event"
+	],
+	"commands":[
+		"GetDeviceInfo",
+		"GetParameterValues",
+		"SetParameterValues",
+		"GetParameterInfo",
+		"GetReportConfiguration",
+		"SetReportConfiguration",
+		"GetEventConfiguration",
+		"SetEventConfiguration"
+	],
+	"supportedEvents":[
+		"onBoot",
+		"onConnect",
+		"onDownloadComplete",
+		"onDownloadFailed",
+		"onUpdate",
+		"onFactoryReset",
+		"onValueChange"
+	],
+	"enabledEvents":[
+		"onBoot",
+		"onConnect",
+		"onDownloadComplete",
+		"onDownloadFailed",
+		"onUpdate",
+		"onFactoryReset",
+		"onValueChange"
+	],
+	"reportInterval":300,
+
+	"parameters":{
+		"aos.updaterate":{
+			"name":"aos.updaterate",
+			"type":"number",
+			"description":"The rate in seconds of how often the water heater polls the platform.",
+			"attrib":"readwrite",
+			"floor":0.0,
+			"ceiling":5.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.mode":{
+			"name":"aos.mode",
+			"type":"enum",
+			"description":"This is the mode setting of the device, not whether or not it is actually heating the water at the moment.",
+			"attrib":"readwrite",
+			"enumvalues":[ "Standard", "Vacation", "EnergySmart" ],
+			"currentValue":"Standard",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.setpoint":{
+			"name":"aos.setpoint",
+			"type":"number",
+			"description":"This is the user-defined setpoint of desired hotwater. The setting cannot be above the (max) setpoint set on the hardware.",
+			"attrib":"readwrite",
+			"floor":0.0,
+			"ceiling":50.0,
+			"currentValue":45.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.units":{
+			"name":"aos.units",
+			"type":"enum",
+			"description":"The display unit of the temperation.",
+			"attrib":"readwrite",
+			"enumvalues":[ "F", "C" ],
+			"currentValue":"C",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.leakdetect":{
+			"name":"aos.leakdetect",
+			"type":"enum",
+			"description":"Enable or disable leak detection. Or report that no sensor is present and force to disabled.",
+			"attrib":"readwrite",
+			"enumvalues":[ "Disabled", "Enabled", "NotDetected" ],
+			"currentValue":"Enabled",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.grid":{
+			"name":"aos.grid",
+			"type":"enum",
+			"description":"This device was originally destined for utilities, so if the grid is controlling your device, it means you are responding to commands over Wifi.",
+			"attrib":"readonly",
+			"enumvalues":[ "Disabled", "Enabled" ],
+			"currentValue":"Disabled",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.maxsetpoint":{
+			"name":"aos.maxsetpoint",
+			"type":"number",
+			"description":"This is the maximum temperature as set on the device. It can be changed on the device and it will report that here.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":50.0,
+			"currentValue":50.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.hotwatervol":{
+			"name":"aos.hotwatervol",
+			"type":"enum",
+			"description":"How much hot water is available.",
+			"attrib":"readonly",
+			"enumvalues":[ "Low", "Medium", "High" ],
+			"currentValue":"High",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.systeminheating":{
+			"name":"aos.systeminheating",
+			"type":"enum",
+			"description":"Indicates if system is currently heating water through an element.",
+			"attrib":"readonly",
+			"enumvalues":[ "True", "False" ],
+			"currentValue":"False",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.leak":{
+			"name":"aos.leak",
+			"type":"enum",
+			"description":"Water conductivity detected on probes.",
+			"attrib":"readonly",
+			"enumvalues":[ "None", "Detected", "Unplugged", "Error" ],
+			"currentValue":"None",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.dryfire":{
+			"name":"aos.dryfire",
+			"type":"enum",
+			"description":"Detects that a dry-fire condition was present.",
+			"attrib":"readonly",
+			"enumvalues":[ "None", "Detected" ],
+			"currentValue":"None",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.elementfail":{
+			"name":"aos.elementfail",
+			"type":"enum",
+			"description":"Status of upper and lower elements.",
+			"attrib":"readonly",
+			"enumvalues":[ "None", "Upper", "Lower", "Upper_Lower" ],
+			"currentValue":"None",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.tanksensorfail":{
+			"name":"aos.tanksensorfail",
+			"type":"enum",
+			"description":"Status of upper and lower elements.",
+			"attrib":"readonly",
+			"enumvalues":[ "None", "Upper", "Lower", "Upper_Lower" ],
+			"currentValue":"None",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.ecoerror":{
+			"name":"aos.ecoerror",
+			"type":"enum",
+			"description":"Mechanical tank over temperature sensor.",
+			"attrib":"readonly",
+			"enumvalues":[ "True", "False" ],
+			"currentValue":"False",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.masterdispfail":{
+			"name":"aos.masterdispfail",
+			"type":"enum",
+			"description":"Master (ET) and Display (ESM) self-test status.",
+			"attrib":"readonly",
+			"enumvalues":[ "None", "Master", "Display" ],
+			"currentValue":"None",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"aos.signalstrength":{
+			"name":"aos.signalstrength",
+			"type":"number",
+			"description":"Connect strength of the wifi",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":100.0,
+			"currentValue":35,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"time.zone_info":{
+			"name":"time.zone_info",
+			"type":"number",
+			"description":"Time zone.",
+			"attrib":"readwrite",
+			"floor":0.0,
+			"ceiling":24.0,
+			"currentValue":6,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"wifi.SSID":{
+			"name":"wifi.SSID",
+			"type":"enum",
+			"description":"What wifi network is this device connected to?",
+			"attrib":"readonly",
+			"enumvalues":["NOWIFI", "WIFI"],
+			"currentValue":"WIFI",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"wifi.RSSI":{
+			"name":"wifi.RSSI",
+			"type":"number",
+			"description":"Connect strength of the wifi",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":100.0,
+			"currentValue":35,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"wifi.leave":{
+			"name":"wifi.leave",
+			"type":"enum",
+			"description":"Connect strength of the wifi",
+			"attrib":"readwrite",
+			"enumvalues":["NOWIFI", "Even Less WiFI"],
+			"currentValue":"NOWIFI",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.package":{
+			"name":"fw.package",
+			"type":"enum",
+			"description":"Current firmware version",
+			"attrib":"readonly",
+			"enumvalues":["1.0.1", "1.0.0"],
+			"currentValue":"1.0.0",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.status":{
+			"name":"fw.status",
+			"type":"enum",
+			"description":"Status of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":[	"OK",
+							"Upgrade Requested",
+							"Upgrade In Progress",
+							"Failed - File Download Error",
+							"Failed - File Decode Error",
+							"Failed - User Settings Migration Error",
+							"Upgrade Complete"],
+			"currentValue":"OK",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.error":{
+			"name":"fw.error",
+			"type":"enum",
+			"description":"Error of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":[	"OK",
+							"Upgrade Requested",
+							"Upgrade In Progress",
+							"Failed - File Download Error",
+							"Failed - File Decode Error",
+							"Failed - User Settings Migration Error",
+							"Upgrade Complete"],
+			"currentValue":"OK",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.target":{
+			"name":"fw.target",
+			"type":"enum",
+			"description":"Target version of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":["1.0.1", "1.0.0"],
+			"currentValue":"1.0.0",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		}
+	}
+}

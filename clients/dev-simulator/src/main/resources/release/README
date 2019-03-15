@@ -1,0 +1,91 @@
+IPCD Device Simulator
+
+
+----------------
+Introduction
+----------------
+The IPCD device simulator is a test client for the IPCD server and 
+can be used to better understand the IP Connected Device protocol.
+
+
+----------------
+Configure
+----------------
+Configuration of the IPCD device simulator consists mainly in creating a
+model of the device to simulate.  Device model are stored in the devices
+directory.
+
+Each device model file must be named
+[vendor]-[model]-[serialnum].dev
+
+The distribution contains a model for a single simulated device,
+a Multisensor2 made by BlackBox with serial number 00049B3C7A05.
+
+This model can be copied and modified.
+
+
+----------------
+Run
+----------------
+To run the application, execute the run_device bash or batch script:
+
+./run_device.sh
+
+By default the simulator will use the BlackBox-Multisensor2-00049B3C7A05 model
+and connect to ws://localhost:8080/ipcd/1.0
+
+To override these defaults, pass the connection URL and the device model as
+arguments to the run_devices script:
+
+./run_device.sh ws://testserver.com/ipcd/1.0 testdevice
+
+In the above case, you would need a valid device model file at 
+devices/testdevice.dev
+
+
+Please verify your environment is configured to use version 1.7 or above of the 
+Java VM.
+
+
+----------------
+Console
+----------------
+Once the device simulator has started, loaded the specified device model, and made
+a connection to the IPCD server, you will be given access to a console.  The following
+commands can be used to control the simulated device:
+
+
+
+bye
+
+Close the connection to the ipcd server and terminate the simulator.
+Examples:
+  bye
+  
+			
+
+event [event code]
+
+Sends an event with the given event code.  Valid event codes include:
+[onBoot, onConnect, onDownloadComplete, onDownloadFailed, onUpdate, onFactoryReset, 
+onValueChange] 
+Examples:
+  event onBoot
+  event onFactoryReset
+  
+  
+
+report
+
+Sends a report according to the report configuration of the simulated device.
+Examples:
+  report
+
+
+
+ping
+
+Sends a websocket ping to the server
+Examples:
+  ping
+

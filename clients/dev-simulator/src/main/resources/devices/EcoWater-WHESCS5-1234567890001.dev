@@ -1,0 +1,487 @@
+{
+	"vendor":"EcoWater",
+	"model":"WHESCS5",
+	"sn":"1234567890002",
+	"ipcdver":"0.3",
+	"connection":"persistent",
+	"connectUrl":"wss://dev-bi.irisbylowes.com:8080/ipcd/1.0",
+	"uptime":1402006779,
+	"actions":[
+		"Report",
+		"Event"
+	],
+	"commands":[
+		"GetDeviceInfo",
+		"GetParameterValues",
+		"SetParameterValues",
+		"GetParameterInfo",
+		"GetReportConfiguration",
+		"SetReportConfiguration",
+		"GetEventConfiguration",
+		"SetEventConfiguration"
+	],
+	"supportedEvents":[
+		"onBoot",
+		"onConnect",
+		"onDownloadComplete",
+		"onDownloadFailed",
+		"onUpdate",
+		"onFactoryReset",
+		"onValueChange"
+	],
+	"enabledEvents":[
+		"onBoot",
+		"onConnect",
+		"onDownloadComplete",
+		"onDownloadFailed",
+		"onUpdate",
+		"onFactoryReset",
+		"onValueChange"
+	],
+	"reportInterval":300,
+
+	"parameters":{
+		"ecw.regen_status":{
+			"name":"ecw.regen_status",
+			"type":"number",
+			"description":"If the water is being softened.",
+			"attrib":"readwrite",
+			"floor":0.0,
+			"ceiling":2.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"ecw.regen_time_remaining":{
+			"name":"ecw.time_remaining",
+			"type":"number",
+			"description":"Time in minutes remaining to complete recharge cycle.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":60.0,
+			"currentValue":9.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		}, 
+		"ecw.salt_level":{
+			"name":"ecw.salt_level",
+			"type":"enum",
+			"description":"Current level of salt.",
+			"attrib":"readonly",
+			"enumvalues":[ "L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "OFF" ],
+			"currentValue":"L4",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		
+		"ecw.hardness":{
+			"name":"ecw.hardness",
+			"type":"number",
+			"description":"Water hardness level as reported in grains per gallon.",
+			"attrib":"readonly",
+			"floor":1.0,
+			"ceiling":160.0,
+			"currentValue":45.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.recharge_time":{
+			"name":"ecw.recharge_time",
+			"type":"number",
+			"description":"Currently set recharge time of day.",
+			"attrib":"readwrite",
+			"floor":0.0,
+			"ceiling":24.0,
+			"currentValue":2.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.on_time":{
+			"name":"ecw.on_time",
+			"type":"number",
+			"description":"How long as the water softener been on.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":45.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.recharges":{
+			"name":"ecw.recharges",
+			"type":"number",
+			"description":"Total number of recharge cycles that have been run.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":45.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"ecw.used_today":{
+			"name":"ecw.used_today",
+			"type":"number",
+			"description":"Gallons of water used today.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":45.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"ecw.used_average":{
+			"name":"ecw.used_average",
+			"type":"number",
+			"description":"Gallons of water used on average.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":450.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.soft_water_available":{
+			"name":"ecw.soft_water_available",
+			"type":"number",
+			"description":"Gallons of water available.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":450.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.flow_rate":{
+			"name":"ecw.flow_rate",
+			"type":"number",
+			"description":"Flow of water in Gallons per Minute (GPM).",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":5.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.efficiency":{
+			"name":"ecw.efficiency",
+			"type":"enum",
+			"description":"Current level of salt.",
+			"attrib":"readonly",
+			"enumvalues":[ "0", "1" ],
+			"currentValue":"0",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		
+		"ecw.error":{
+			"name":"ecw.error",
+			"type":"enum",
+			"description":"Any Error.",
+			"attrib":"readonly",
+			"enumvalues":["true", "false"],
+			"currentValue":"false",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.water_alert":{
+			"name":"ecw.water_alert",
+			"type":"enum",
+			"description":"Water is flooding everywhere quick run!.",
+			"attrib":"readonly",
+			"enumvalues":["true", "false"],
+			"currentValue":"false",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.alert_durr":{
+			"name":"ecw.alert_durr",
+			"type":"number",
+			"description":"How long has the alert been going on (s).",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,	
+			"currentValue":50,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.alert_flow":{
+			"name":"ecw.alert_flow",
+			"type":"number",
+			"description":"how fast the leak is going gpm.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":16000000.0,
+			"currentValue":50,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.use_alert":{
+			"name":"ecw.use_alert",
+			"type":"enum",
+			"description":"Use the alert?.",
+			"attrib":"readonly",
+			"enumvalues":["true", "false"],
+			"currentValue":"false",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"ecw.resin":{
+			"name":"ecw.resin",
+			"type":"enum",
+			"description":"Need to clean the resin bed, Is it dirty?.",
+			"attrib":"readonly",
+			"enumvalues":["true", "false"],
+			"currentValue":"false",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"time.zone_info":{
+			"name":"time.zone_info",
+			"type":"number",
+			"description":"Time zone.",
+			"attrib":"readwrite",
+			"floor":0.0,
+			"ceiling":24.0,
+			"currentValue":6,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+		"wifi.SSID":{
+			"name":"wifi.SSID",
+			"type":"enum",
+			"description":"What wifi network is this device connected to?",
+			"attrib":"readonly",
+			"enumvalues":["NOWIFI", "WIFI"],
+			"currentValue":"WIFI",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"wifi.RSSI":{
+			"name":"wifi.RSSI",
+			"type":"number",
+			"description":"Connect strength of the wifi",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":100.0,
+			"currentValue":35,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"wifi.leave":{
+			"name":"wifi.leave",
+			"type":"enum",
+			"description":"Connect strength of the wifi",
+			"attrib":"readwrite",
+			"enumvalues":["NOWIFI", "Even Less WiFI"],
+			"currentValue":"NOWIFI",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.package":{
+			"name":"fw.package",
+			"type":"enum",
+			"description":"Current firmware version",
+			"attrib":"readonly",
+			"enumvalues":["1.0.1", "1.0.0"],
+			"currentValue":"1.0.0",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.status":{
+			"name":"fw.status",
+			"type":"enum",
+			"description":"Status of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":[	"OK",
+							"Upgrade Requested",
+							"Upgrade In Progress",
+							"Failed - File Download Error",
+							"Failed - File Decode Error",
+							"Failed - User Settings Migration Error",
+							"Upgrade Complete"],
+			"currentValue":"OK",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.error":{
+			"name":"fw.error",
+			"type":"enum",
+			"description":"Error of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":[	"OK",
+							"Upgrade Requested",
+							"Upgrade In Progress",
+							"Failed - File Download Error",
+							"Failed - File Decode Error",
+							"Failed - User Settings Migration Error",
+							"Upgrade Complete"],
+			"currentValue":"OK",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"fw.target":{
+			"name":"fw.target",
+			"type":"enum",
+			"description":"Target version of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":["1.0.1", "1.0.0"],
+			"currentValue":"1.0.0",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		}
+	}
+}

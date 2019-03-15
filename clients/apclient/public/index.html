@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>AP Tester</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	    <script language="JavaScript" type="text/javascript" src="jsbn.js"></script>	 	<!--dependancy -->
+		<script language="JavaScript" type="text/javascript" src="prng4.js"></script>	 	<!--dependancy -->
+		<script language="JavaScript" type="text/javascript" src="rng.js"></script>			<!-- dependancy -->
+		<script language="JavaScript" type="text/javascript" src="rsa.js"></script>
+		<script language="JavaScript" type="text/javascript" src="base64.js"></script>
+        <script src="ap.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+
+    <body>
+        <div id="params">
+            <vendorButton type="button">Vendor</vendorButton>
+            <p class="vendor-id">The vendor is: </p>
+            <modelButton type="button">Model</modelButton>
+            <p class="model-id">The model is: </p>
+            <serialButton type="button">serial</serialButton>
+            <p class="serial-id">The serial is: </p>
+            <statusButton type="button">status</statusButton>
+            <p class="status-id">The status is: </p>
+            <certButton type="button">cert</certButton>
+            <p class="cert-id">The cert is: </p>
+            <scanButton type="button">scan</scanButton>
+         </div>
+         <div>
+            <table id="scan-results">
+            	<caption>Scan Results</caption>
+            	<tr>
+            		<th>SSID</th>
+            		<th>security</th>
+            		<th>channel</th>
+            		<th>signal</th>
+            </table>
+        </div>
+        <div class=form>
+        	<p>
+        	<label for="ssid_name">Enter the ssid</label>
+	        <input type="text" id="ssid_name" class="ssid_name"  />
+	        </p>
+	        <p>
+        	<label for="password">Enter the password</label>
+	        <input type="text" id="password" class="password"  />
+	        </p>
+        </div>
+        <div>
+	        <p></p>
+	        <sendButton id="send" type="button">Send Network Information</sendButton>
+	    </div>
+    </body>
+</html>

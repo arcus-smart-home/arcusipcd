@@ -1,0 +1,40 @@
+buildscript {
+    repositories { 
+        	mavenCentral()
+    }
+}
+
+subprojects {
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+  apply plugin: 'maven'
+
+  repositories {
+    	  mavenCentral()
+  }
+
+  dependencies {
+    testCompile 'org.hamcrest:hamcrest-core:1.2',
+                'junit:junit:4.8.2',
+        'nl.jqno.equalsverifier:equalsverifier:1.5'
+  }
+
+  group = 'org.arcus'
+  version = '1.1.0-SNAPSHOT'
+
+  // Shared manifest for all jar files
+  ext.sharedManifest = manifest {
+    attributes(
+      'Implementation-Title': project.name,
+      'Implementation-Version': project.version,
+    )
+  }
+
+  jar {
+    manifest = project.manifest {
+      from sharedManifest
+    }
+
+    manifest.attributes provider: 'arcus'
+  }
+}

@@ -1,0 +1,450 @@
+{
+	"vendor":"Genie",
+	"model":"Aladdin",
+	"sn":"1234567890002",
+	"ipcdver":"0.3",
+	"connection":"persistent",
+	"connectUrl":"wss://dev-bi.irisbylowes.com:8080/ipcd/1.0",
+	"uptime":1402006779,
+	"actions":[
+		"Report",
+		"Event"
+	],
+	"commands":[
+		"GetDeviceInfo",
+		"GetParameterValues",
+		"SetParameterValues",
+		"GetParameterInfo",
+		"GetReportConfiguration",
+		"SetReportConfiguration",
+		"GetEventConfiguration",
+		"SetEventConfiguration"
+	],
+	"supportedEvents":[
+		"onBoot",
+		"onConnect",
+		"onDownloadComplete",
+		"onDownloadFailed",
+		"onUpdate",
+		"onFactoryReset",
+		"onValueChange"
+	],
+	"enabledEvents":[
+		"onBoot",
+		"onConnect",
+		"onDownloadComplete",
+		"onDownloadFailed",
+		"onUpdate",
+		"onFactoryReset",
+		"onValueChange"
+	],
+	"reportInterval":300,
+
+	"parameters":{
+
+		"dps1.link_status":{
+			"name":"dps1.link_status",
+			"type":"enum",
+			"description":"Link status to the garage door opener",
+			"attrib":"readonly",
+			"enumvalues":[ "CONNECTED", "PAIRED", "NOT_CONNECTED", "LOCK_OUT" ],
+			"currentValue":"NOT_CONNECTED",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps1.door_status":{
+			"name":"dps1.door_status",
+			"type":"enum",
+			"description":"Current status of the door.",
+			"attrib":"readonly",
+			"enumvalues":[ "OPEN", "CLOSED" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps1.door_oper":{
+			"name":"dps1.door_oper",
+			"type":"enum",
+			"description":"Current status of the door.",
+			"attrib":"readwrite",
+			"enumvalues":[ "OPEN", "OPENING", "TIMEOUT_OPENING", "CLOSED", "CLOSING", "TIMEOUT_CLOSING" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps1.door_desired":{
+			"name":"dps1.door_desired",
+			"type":"enum",
+			"description":"Desired door state.",
+			"attrib":"readwrite",
+			"enumvalues":[ "OPEN", "CLOSED" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps1.door_battery":{
+			"name":"dps1.door_battery",
+			"type":"number",
+			"description":"Currnet battery level.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":100.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps1.ble_strength":{
+			"name":"dps1.ble_strength",
+			"type":"number",
+			"description":"Strength of the connect to the garage door sensor.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":100.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps1.door_temp":{
+			"name":"dps1.door_temp",
+			"type":"number",
+			"description":"Door Temperature.",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":200.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+
+		"dps2.link_status":{
+			"name":"dps2.link_status",
+			"type":"enum",
+			"description":"Link status to the garage door opener",
+			"attrib":"readonly",
+			"enumvalues":[ "CONNECTED", "PAIRED", "NOT_CONNECTED", "LOCK_OUT" ],
+			"currentValue":"NOT_CONNECTED",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps2.door_status":{
+			"name":"dps2.door_status",
+			"type":"enum",
+			"description":"Current status of the door.",
+			"attrib":"readonly",
+			"enumvalues":[ "OPEN", "CLOSED" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps2.door_oper":{
+			"name":"dps2.door_oper",
+			"type":"enum",
+			"description":"Current status of the door.",
+			"attrib":"readwrite",
+			"enumvalues":[ "OPEN", "OPENING", "TIMEOUT_OPENING", "CLOSED", "CLOSING", "TIMEOUT_CLOSING" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps2.door_desired":{
+			"name":"dps2.door_desired",
+			"type":"enum",
+			"description":"Desired door state.",
+			"attrib":"readwrite",
+			"enumvalues":[ "OPEN", "CLOSED" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps2.door_battery":{
+			"name":"dps2.door_battery",
+			"type":"number",
+			"description":"Currnet battery level.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":100.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps2.ble_strength":{
+			"name":"dps2.ble_strength",
+			"type":"number",
+			"description":"Strength of the connect to the garage door sensor.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":100.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps2.door_temp":{
+			"name":"dps2.door_temp",
+			"type":"number",
+			"description":"Door Temperature.",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":200.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+
+		"dps3.link_status":{
+			"name":"dps3.link_status",
+			"type":"enum",
+			"description":"Link status to the garage door opener",
+			"attrib":"readonly",
+			"enumvalues":[ "CONNECTED", "PAIRED", "NOT_CONNECTED", "LOCK_OUT" ],
+			"currentValue":"NOT_CONNECTED",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps3.door_status":{
+			"name":"dps3.door_status",
+			"type":"enum",
+			"description":"Current status of the door.",
+			"attrib":"readonly",
+			"enumvalues":[ "OPEN", "CLOSED" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps3.door_oper":{
+			"name":"dps3.door_oper",
+			"type":"enum",
+			"description":"Current status of the door.",
+			"attrib":"readwrite",
+			"enumvalues":[ "OPEN", "OPENING", "TIMEOUT_OPENING", "CLOSED", "CLOSING", "TIMEOUT_CLOSING" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps3.door_desired":{
+			"name":"dps3.door_desired",
+			"type":"enum",
+			"description":"Desired door state.",
+			"attrib":"readwrite",
+			"enumvalues":[ "OPEN", "CLOSED" ],
+			"currentValue":"OPEN",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps3.door_battery":{
+			"name":"dps3.door_battery",
+			"type":"number",
+			"description":"Currnet battery level.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":100.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps3.ble_strength":{
+			"name":"dps3.ble_strength",
+			"type":"number",
+			"description":"Strength of the connect to the garage door sensor.",
+			"attrib":"readonly",
+			"floor":0.0,
+			"ceiling":100.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		"dps3.door_temp":{
+			"name":"dps3.door_temp",
+			"type":"number",
+			"description":"Door Temperature.",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":200.0,
+			"currentValue":0.0,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+
+
+
+
+
+		"dcm.wifi_SSID":{
+			"name":"dcm.wifi_SSID",
+			"type":"enum",
+			"description":"What wifi network is this device connected to?",
+			"attrib":"readonly",
+			"enumvalues":["NOWIFI", "WIFI"],
+			"currentValue":"WIFI",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"dcm.wifi_RSSI":{
+			"name":"dcm.wifi_RSSI",
+			"type":"number",
+			"description":"Connect strength of the wifi",
+			"attrib":"readonly",
+			"floor":-100.0,
+			"ceiling":100.0,
+			"currentValue":35,
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		
+		"dcm.fw_version":{
+			"name":"dcm.fw_version",
+			"type":"enum",
+			"description":"Current firmware version",
+			"attrib":"readonly",
+			"enumvalues":["1.0.1", "1.0.0"],
+			"currentValue":"1.0.0",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		},
+		
+		"dcm.error_code":{
+			"name":"dcm.error_code",
+			"type":"enum",
+			"description":"Status of firmware upgrade",
+			"attrib":"readonly",
+			"enumvalues":[	"OK",
+							"Upgrade Requested",
+							"Upgrade In Progress",
+							"Failed - File Download Error",
+							"Failed - File Decode Error",
+							"Failed - User Settings Migration Error",
+							"Upgrade Complete"],
+			"currentValue":"OK",
+			"supportedValueChanges":[
+				"onChange",
+				"onEquals"
+			],
+			"enabledValueChanges":{
+				"onChange":true
+			}
+		}		
+	}
+}

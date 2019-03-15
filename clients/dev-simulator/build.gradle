@@ -1,0 +1,56 @@
+
+dependencies {
+  compile project(':ipcd-lib')
+  compile 'io.netty:netty-all:4.0.17.Final'
+  compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.0-rc1'
+  compile 'org.apache.logging.log4j:log4j-core:2.0-rc1'
+  compile 'org.apache.httpcomponents:httpclient:4.3.4'
+  
+}
+
+ext.ipcdDevSimManifest = project.manifest {
+  attributes(
+    'Implementation-Title': 'ipcd-dev-simulator',
+  )
+}
+
+jar {
+  manifest = project.manifest {
+    from sharedManifest
+    from ipcdDevSimManifest
+  }
+}
+
+task copyLibs(type: Copy, dependsOn: 'build') {
+    from configurations.compile
+    into 'build/release/lib'
+}
+
+task copyConfig(type: Copy, dependsOn: 'copyLibs') {
+	from('src/main/resources') {
+		include '*.properties'
+		include '*.xml'
+	}
+	into 'build/release/config'
+}
+
+task copyDevices(type: Copy, dependsOn: 'copyConfig') {
+	from('src/main/resources/devices') {
+	  include '*.dev'
+	}
+	into 'build/release/devices'
+}
+
+task copyReleaseRes(type: Copy, dependsOn: 'copyDevices') {
+	from('src/main/resources/release') {
+		include 'README'
+		include '*.sh'
+		include '*.bat'
+	}
+	into 'build/release'
+}
+
+task release (type: Copy, dependsOn: 'copyReleaseRes') {
+	from libsDir
+	into 'build/release/lib'
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="US-ASCII">
+<title>IPCD Device Simulator</title>
+
+<style>
+body {
+	font-family: verdana,helvetica,arial,sans-serif;
+	font-size: 13px;
+}
+#titlebar {
+	/*border: 1px solid #333333;*/
+	background-color: #e3e3e3; border-radius: 4px; padding: 8px; font-size: 15px;
+}
+#leftnav {
+	width:170px; float:left; display:inline; margin-right:4px; margin-left:10px;
+}
+div.menuSelected {
+	border-radius:4px; margin-top: 8px; margin-bottom: 8px; padding: 8px; font-size: 14px; background-color: #4b5f95; color: #eeeeee; 
+}
+div.menuDeselected {
+	border-radius:4px; margin-top: 8px; margin-bottom: 8px; padding: 8px; font-size: 14px; 
+}
+div.menuSelected > a.menuitem  {
+	color: #eeeeee; text-decoration: none;
+}
+div.menuDeselected > a.menuitem  {
+	color: #000000; text-decoration: none;
+}
+div.mainpanel {
+	margin-left: 190px; margin-right:8px; margin-top:8px; margin-bottom:8px;
+	border-radius:4px;  padding: 8px;
+	border: 1px solid #e3e3e3;
+}
+</style>
+
+</head>
+<body>
+
+<div>
+<div id="titlebar">IPCD Device Simulator</div>
+<div id="topnav"></div>
+<div id="below">
+  <div id="leftnav">
+  	<div id="actions" class="menuDeselected"><a href="#actions" class="menuitem">Actions</a></div>
+  	<div id="devicemodel" class="menuSelected"><a href="#devicemodel" class="menuitem">Device Model</a></div>
+  	<div id="console" class="menuDeselected"><a href="#console" class="menuitem">Console</a></div>
+  	<div id="commlog" class="menuDeselected"><a href="#commlog" class="menuitem">Comm Log</a></div>
+  </div>
+  <div id="main">
+    <div id="mainactions" class="mainpanel">This is the main actions div</div>
+    <div id="maindevicemodel" class="mainpanel">This is the main device model div</div>
+    <div id="mainconsole" class="mainpanel">This is the main console div</div>
+    <div id="maincommlog" class="mainpanel">This is the main comm log div</div>
+  </div>
+</div> 
+</body>
+</html>

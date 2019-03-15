@@ -1,0 +1,48 @@
+
+dependencies {
+  compile project(':ipcd-lib')
+  compile 'org.apache.commons:commons-lang3:3.3.2'
+  compile 'io.netty:netty-all:4.0.17.Final'
+  compile 'com.codahale.metrics:metrics-core:3.0.1'
+  compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.0-rc1'
+  compile 'org.apache.logging.log4j:log4j-core:2.0-rc1'
+  compile 'org.springframework:spring-context:4.0.3.RELEASE'
+}
+
+ext.ipcdServerManifest = project.manifest {
+    attributes 'Main-Class': 'com.iris.ipcd.server.IpcdServer'
+}
+
+jar {
+  manifest = project.manifest {
+    from sharedManifest
+    from ipcdServerManifest
+  }  
+}
+
+task copyLibs(type: Copy, dependsOn: 'build') {
+    from configurations.compile
+    into 'build/release/lib'
+}
+
+task copyConfig(type: Copy, dependsOn: 'copyLibs') {
+	from('src/main/resources') {
+		include '*.properties'
+		include '*.xml'
+	}
+	into 'build/release/config'
+}
+
+task copyReleaseRes(type: Copy, dependsOn: 'copyConfig') {
+	from('src/main/resources/release') {
+		include 'README'
+		include '*.sh'
+		include '*.bat'
+	}
+	into 'build/release'
+}
+
+task release (type: Copy, dependsOn: 'copyReleaseRes') {
+	from libsDir
+	into 'build/release/lib'
+}
