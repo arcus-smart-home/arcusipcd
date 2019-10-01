@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
      name='arcusipcd',
      version='0.1',
-     scripts=['dokr'] ,
+     scripts=[] ,
      author="Andrew Sorensen",
      author_email="andrew@andrewsorensen.net",
      description="Arcus IPCD Client",
