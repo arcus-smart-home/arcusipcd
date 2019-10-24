@@ -29,7 +29,7 @@ def main():
   }])
 
 
-  ipcdclient.report(device, {"generic.contact": "closed"})
+  client.report(device, {"generic.contact": "closed"})
   client.disconnect()
 
 if __name__ == "__main__":
