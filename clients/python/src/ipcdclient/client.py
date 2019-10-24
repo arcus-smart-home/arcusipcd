@@ -4,6 +4,7 @@ import json
 import urllib3
 import websockets
 import logging
+import threading
 
 
 __all__ = ['IpcdClient']
@@ -119,19 +120,32 @@ class IpcdClient(object):
 
           await websocket.send(json.dumps(data))
 
-        # Enter the general event loop
-        while True:
-          msg = await self.queue.get()
-          await websocket.send(msg)
+        async def reader(websocket):
+          while True:
+            print(await websocket.recv())
+
+        async def writer(websocket):
+          while True:
+            msg = await self.queue.get()
+            await websocket.send(msg)
+
+        loop = asyncio.get_event_loop()
+
+        loop.create_task(reader(websocket))
+        loop.create_task(writer(websocket))
+
+        await websocket.wait_closed()
 
     def loop_in_thread(loop):
       asyncio.set_event_loop(loop)
       loop.run_until_complete(connect_loop())
 
     loop = asyncio.get_event_loop()
-    import threading
     t = threading.Thread(target=loop_in_thread, args=(loop,))
     t.start()
+
+  def disconnect(self):
+    pass  # TODO
 
   def send(self, device, message):
     """
