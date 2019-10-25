@@ -6,6 +6,7 @@ import websockets
 import logging
 import threading
 
+from .command import from_payload
 
 __all__ = ['IpcdClient']
 
@@ -33,6 +34,7 @@ class IpcdClient(object):
       self.sn = sn
       if not ipcd_version:
         self.ipcd_version = IpcdClient.IPCD_VERSION
+      self._client = None
 
     def to_obj(self):
       data = {
@@ -43,6 +45,30 @@ class IpcdClient(object):
       }
 
       return data
+
+    def _set_client(self, client):
+      """
+      Used to support Device methods.
+      :param client:
+      :return:
+      """
+      self._client = client
+
+    def get_client(self):
+      """
+      Callers should not attempt to use the client directly. In the future this is likely to be stubbed
+      with a "NoopClient" for cases where a client is not available.
+      :return:
+      """
+      return self._client
+
+    def on_message(self, message):
+      """
+
+      :param message:
+      :return:
+      """
+      from_payload(message).apply(self)
 
   def __init__(self, hostname):
     _validate_hostname(hostname)
@@ -95,6 +121,7 @@ class IpcdClient(object):
     return request
 
   def add_device(self, device):
+    device._set_client(self)
     self.devices.append(device)
 
   def connect(self):
@@ -122,7 +149,8 @@ class IpcdClient(object):
 
         async def reader(websocket):
           while True:
-            print(await websocket.recv())
+            msg = await websocket.recv()
+            self.devices[0].on_message(json.loads(msg))
 
         async def writer(websocket):
           while True:
@@ -148,6 +176,15 @@ class IpcdClient(object):
     pass  # TODO
 
   def send(self, device, message):
+    """
+    Wrapper. Need to rename!
+    :param device:
+    :param message:
+    :return:
+    """
+    self.on_value_change(device, message)
+
+  def on_value_change(self, device, message):
     """
     Send a device report over IPCD
     :param device:
