@@ -25,12 +25,12 @@ class GenericDimmer(IpcdClient.Device):
     self.level = int(level)
     self.get_client().on_value_change(self, [{'parameter': 'generic.brightness', 'value': 5}])
 
-  def report(self):
+  def turn_on(self):
     if self.on == False:
       self.on = True
       self.get_client().on_value_change(self, [{'parameter': 'generic.switch', 'value': 'on'}])
 
-  def report(self):
+  def turn_off(self):
     if self.on == True:
       self.on = False
       self.get_client().on_value_change(self, [{'parameter': 'generic.switch', 'value': 'off'}])
