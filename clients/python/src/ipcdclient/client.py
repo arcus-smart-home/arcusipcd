@@ -134,9 +134,10 @@ class IpcdClient(object):
     if not self.devices:
       raise ValueError("Can't connect without at least one device added.")
 
+    self.state = 'CONNECTING'
+
     async def connect_loop():
       async with websockets.connect(self.hostname + '/ipcd/1.0') as websocket:
-        self.state = 'CONNECTED'
         loop = asyncio.get_event_loop()
 
         # First, add all the pre-registered devices.
@@ -152,6 +153,7 @@ class IpcdClient(object):
           }
 
           await websocket.send(json.dumps(data))
+          self.state = 'CONNECTED'
 
         async def reader(websocket):
           while True:
@@ -239,7 +241,7 @@ class IpcdClient(object):
     self.queue.put_nowait(payload)
 
   def is_connected(self):
-    return self.state == 'CONNECTED'
+    return self.state == 'CONNECTED' or self.state == 'CONNECTING'
 
 
 def main():
