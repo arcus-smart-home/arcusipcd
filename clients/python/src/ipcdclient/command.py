@@ -60,7 +60,9 @@ class SetReportConfigurationCommand(IpcdCommand):
 
 
 commands = {
+  'GetParameterValues': GetParameterValuesCommand,
   'SetParameterValues': SetParameterValuesCommand,
+
 }
 
 
