@@ -77,6 +77,7 @@ class IpcdClient(object):
     self.pool = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
     self.devices = []
     self.queue = asyncio.Queue()
+    self.state = 'DISCONNECTED'
     self._setup_logger()
 
   def _setup_logger(self):
@@ -130,8 +131,12 @@ class IpcdClient(object):
     :return:
     """
 
+    if not self.devices:
+      raise ValueError("Can't connect without at least one device added.")
+
     async def connect_loop():
       async with websockets.connect(self.hostname + '/ipcd/1.0') as websocket:
+        self.state = 'CONNECTED'
         loop = asyncio.get_event_loop()
 
         # First, add all the pre-registered devices.
@@ -151,6 +156,7 @@ class IpcdClient(object):
         async def reader(websocket):
           while True:
             msg = await websocket.recv()
+            # TODO: determine which device this is for when we support bridges
             loop.create_task(self.devices[0].on_message(json.loads(msg)))
 
         async def writer(websocket):
@@ -190,6 +196,9 @@ class IpcdClient(object):
     :param message:
     :return:
     """
+    if not self.is_connected():
+      raise ValueError("tried to report a value change without a connection")
+
     data = {
       'device': {
         'ipcdver': self.ipcd_version,
@@ -212,6 +221,9 @@ class IpcdClient(object):
     :param message:
     :return:
     """
+    if not self.is_connected():
+      raise ValueError("tried to report device status without a connection")
+
     data = {
       'device': {
         'ipcdver': self.ipcd_version,
@@ -225,6 +237,9 @@ class IpcdClient(object):
     payload = json.dumps(data)
     self.logger.info("report: putting %s on the queue", payload)
     self.queue.put_nowait(payload)
+
+  def is_connected(self):
+    return self.state == 'CONNECTED'
 
 
 def main():
