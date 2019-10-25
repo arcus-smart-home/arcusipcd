@@ -62,7 +62,7 @@ class IpcdClient(object):
       """
       return self._client
 
-    def on_message(self, message):
+    async def on_message(self, message):
       """
 
       :param message:
@@ -132,6 +132,7 @@ class IpcdClient(object):
 
     async def connect_loop():
       async with websockets.connect(self.hostname + '/ipcd/1.0') as websocket:
+        loop = asyncio.get_event_loop()
 
         # First, add all the pre-registered devices.
         for device in self.devices:
@@ -150,14 +151,12 @@ class IpcdClient(object):
         async def reader(websocket):
           while True:
             msg = await websocket.recv()
-            self.devices[0].on_message(json.loads(msg))
+            loop.create_task(self.devices[0].on_message(json.loads(msg)))
 
         async def writer(websocket):
           while True:
             msg = await self.queue.get()
             await websocket.send(msg)
-
-        loop = asyncio.get_event_loop()
 
         loop.create_task(reader(websocket))
         loop.create_task(writer(websocket))

@@ -1,9 +1,24 @@
 #!/usr/bin/env python3
 
 import logging
+import time
 
 from ipcdclient.client import IpcdClient
 from ipcdclient.device import GenericDimmer
+
+
+class FakeGenericDimmer(GenericDimmer):
+  def set_level(self, level):
+    time.sleep(2)
+    self.report_level(level)
+
+  def turn_off(self):
+    time.sleep(2)
+    self.report_off()
+
+  def turn_on(self):
+    time.sleep(2)
+    self.report_on()
 
 
 def main():
@@ -15,7 +30,7 @@ def main():
 
   client = IpcdClient('wss://arcus.example.com')
 
-  device = GenericDimmer('12345678')
+  device = FakeGenericDimmer('12345678')
   client.add_device(device)
 
   client.connect()
@@ -33,7 +48,7 @@ def main():
   }])
 
   # The device knows which client is using it, and can also automatically communicate.
-  device.set_level(50)
+  device.report_level(50)
 
   device.turn_off()
 
