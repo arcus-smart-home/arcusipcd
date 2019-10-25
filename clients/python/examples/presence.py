@@ -21,11 +21,11 @@ def main():
 
   logger.info("marking device as present")
 
-  client.send(device, [{
+  client.on_value_change(device, [{
     'parameter': 'generic.presence', 'value': 'present'
   }])
 
-  client.send(device, [{
+  client.on_value_change(device, [{
     'parameter': 'generic.presence', 'value': 'absent'
   }])
 

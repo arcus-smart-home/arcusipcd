@@ -9,7 +9,7 @@ client.add_device(device)
 
 client.connect()
 
-client.send(device, [{
+client.on_value_change(device, [{
   'parameter': 'generic.contact', 'value': 'closed'
 }])
 ```

@@ -23,12 +23,12 @@ def main():
   logger.info("changing dimmer values")
 
   # Example with a client
-  client.send(device, [{
+  client.on_value_change(device, [{
     'parameter': 'generic.brightness', 'value': 5,
     'parameter': 'generic.switch', 'value': 'on'
   }])
 
-  client.send(device, [{
+  client.on_value_change(device, [{
     'parameter': 'generic.brightness', 'value': 50
   }])
 

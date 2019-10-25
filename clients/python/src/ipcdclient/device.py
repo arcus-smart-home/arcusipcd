@@ -23,17 +23,17 @@ class GenericDimmer(IpcdClient.Device):
       raise ValueError()
 
     self.level = int(level)
-    self.get_client().send(self, [{'parameter': 'generic.brightness', 'value': 5}])
+    self.get_client().on_value_change(self, [{'parameter': 'generic.brightness', 'value': 5}])
 
   def report(self):
     if self.on == False:
       self.on = True
-      self.get_client().send(self, [{'parameter': 'generic.switch', 'value': 'on'}])
+      self.get_client().on_value_change(self, [{'parameter': 'generic.switch', 'value': 'on'}])
 
   def report(self):
     if self.on == True:
       self.on = False
-      self.get_client().send(self, [{'parameter': 'generic.switch', 'value': 'off'}])
+      self.get_client().on_value_change(self, [{'parameter': 'generic.switch', 'value': 'off'}])
 
   def set_values(self, values):
     """

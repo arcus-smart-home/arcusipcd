@@ -20,11 +20,11 @@ def main():
 
   logger.info("marking contact as closed")
 
-  client.send(device, [{
+  client.on_value_change(device, [{
     'parameter': 'generic.contact', 'value': 'closed'
   }])
 
-  client.send(device, [{
+  client.on_value_change(device, [{
     'parameter': 'generic.contact', 'value': 'opened'
   }])
 
