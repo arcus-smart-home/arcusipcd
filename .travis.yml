@@ -8,8 +8,6 @@ matrix:
           - cd clients/python
       install:
         - pip install -r requirements.txt
-      before_script:
-        - cd clients/python
       env:
         - PYTHONPATH=src
       script:
