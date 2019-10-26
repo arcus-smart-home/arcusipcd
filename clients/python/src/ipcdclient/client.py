@@ -32,8 +32,12 @@ class IpcdClient(object):
       self.vendor = vendor
       self.model = model
       self.sn = sn
+
       if not ipcd_version:
         self.ipcd_version = IpcdClient.IPCD_VERSION
+      else:
+        self.ipcd_version = ipcd_version
+
       self._client = None
 
     def to_obj(self):
