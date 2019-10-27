@@ -6,6 +6,7 @@ import websockets
 import logging
 import threading
 from enum import Enum
+from time import time
 
 from .command import from_payload
 
@@ -40,6 +41,7 @@ class IpcdClient(object):
         self.ipcd_version = ipcd_version
 
       self._client = None
+      self.start = time()
 
     def to_obj(self):
       data = {
@@ -75,6 +77,13 @@ class IpcdClient(object):
       """
       cmd = from_payload(message)
       await cmd.apply(self)
+
+    def get_uptime(self):
+      """
+      Gets the device uptime (since it was constructed)
+      :return:
+      """
+      return int(time() - self.start)
 
 
   class InternalMessage(object):

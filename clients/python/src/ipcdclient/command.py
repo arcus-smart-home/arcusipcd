@@ -10,15 +10,41 @@ class IpcdCommand(object):
 
 
 class DownloadCommand(IpcdCommand):
-  pass
+  """
+  Called when the platform wants the device to update.
+  Unsupported!
+  """
+  def __init__(self):
+    super().__init__()
+
+  def apply(self, device):
+    pass # not supported, do nothing.
 
 
 class FactoryResetCommand(IpcdCommand):
-  pass
+  """
+  Called when the platform wants to get information about the device.
+  """
+  def __init__(self):
+    super().__init__()
+
+  def apply(self, device):
+    device.on_factory_reset()
 
 
 class GetDeviceInfoCommand(IpcdCommand):
-  pass
+  """
+  Called when the platform wants to get information about the device.
+  """
+  def __init__(self):
+    super().__init__()
+
+  def apply(self, device):
+    return {
+      'fwver': '1.0',
+      'connection': 'on-demand',
+      'uptime': device.get_uptime(),
+    }
 
 
 class GetEventConfigurationCommand(IpcdCommand):
@@ -61,8 +87,12 @@ class SetReportConfigurationCommand(IpcdCommand):
 
 
 commands = {
-  'GetParameterValues': GetParameterValuesCommand,
-  'SetParameterValues': SetParameterValuesCommand,
+  'GetDeviceInfo':         GetDeviceInfoCommand,
+  'Download':              DownloadCommand,
+  'GetParameterValues':    GetParameterValuesCommand,
+  'SetEventConfiguration': SetEventConfigurationCommand,
+  'SetParameterValues':    SetParameterValuesCommand,
+
 
 }
 

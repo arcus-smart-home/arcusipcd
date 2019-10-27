@@ -40,3 +40,9 @@ class TestClient(unittest.TestCase):
     device = IpcdClient.Device("Ab", "Cd", "Ef", "12345")
     with self.assertRaises(ValueError):
       client.report(device, {})
+
+  def test_uptime(self):
+    device = IpcdClient.Device("Ab", "Cd", "Ef", "12345")
+    import time
+    time.sleep(2)
+    self.assertGreater(device.get_uptime(), 1)
