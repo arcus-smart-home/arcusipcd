@@ -34,16 +34,16 @@ class FakeGenericDimmer(GenericDimmer):
   A simple fake dimmer. You should copy this example and replace the stubs with something that actually does something.
   You should only call the report_* methods after the hardware reflects the requested state.
   """
-  def set_level(self, level):
-    time.sleep(2)
+  async def set_level(self, level):
+    await asyncio.sleep(2)
     self.report_level(level)
 
-  def turn_off(self):
-    time.sleep(2)
+  async def turn_off(self):
+    await asyncio.sleep(2)
     self.report_off()
 
-  def turn_on(self):
-    time.sleep(2)
+  async def turn_on(self):
+    await asyncio.sleep(2)
     self.report_on()
 
 
@@ -54,10 +54,6 @@ def main():
   client.add_device(device)
 
   client.connect()
-
-  device.turn_off()
-
-  client.disconnect()
 ```
 
 
