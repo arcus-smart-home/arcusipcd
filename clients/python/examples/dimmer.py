@@ -8,6 +8,10 @@ from ipcdclient.device import GenericDimmer
 
 
 class FakeGenericDimmer(GenericDimmer):
+  """
+  A simple fake dimmer. You should copy this example and replace the stubs with something that actually does something.
+  You should only call the report_* methods after the hardware reflects the requested state.
+  """
   def set_level(self, level):
     time.sleep(2)
     self.report_level(level)
