@@ -18,7 +18,7 @@ class DownloadCommand(IpcdCommand):
     super().__init__()
 
   def apply(self, device):
-    pass # not supported, do nothing.
+    pass  # not supported, do nothing.
 
 
 class FactoryResetCommand(IpcdCommand):
@@ -61,7 +61,15 @@ class GetParameterValuesCommand(IpcdCommand):
 
 
 class LeaveCommand(IpcdCommand):
-  pass
+  """
+  Called when the platform wants the device to leave.
+  Unsupported!
+  """
+  def __init__(self):
+    super().__init__()
+
+  def apply(self, device):
+    pass  # not supported, do nothing.
 
 
 class SetDeviceInfoCommand(IpcdCommand):
@@ -89,15 +97,21 @@ class SetReportConfigurationCommand(IpcdCommand):
 commands = {
   'GetDeviceInfo':         GetDeviceInfoCommand,
   'Download':              DownloadCommand,
+  'SetDeviceInfo':         SetDeviceInfoCommand,
   'GetParameterValues':    GetParameterValuesCommand,
   'SetEventConfiguration': SetEventConfigurationCommand,
   'SetParameterValues':    SetParameterValuesCommand,
-
-
 }
 
 
 def from_payload(msg):
+  """
+  Creates a command based on platform-specified input.
+  :param msg:
+  :return:
+  """
   cmd = msg.pop('command')
+
+  # TODO: handle case that command is not valid
 
   return commands[cmd](**msg)
