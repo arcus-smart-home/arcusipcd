@@ -14,7 +14,7 @@ class GenericDimmer(IpcdClient.Device):
     super(GenericDimmer, self).__init__('Generic', 'Dimmer', serial)
 
   # BEGIN: hw implements
-  def set_level(self, level):
+  async def set_level(self, level):
     """
     Implement to set the level of brightness.
     :param level:
@@ -22,14 +22,14 @@ class GenericDimmer(IpcdClient.Device):
     """
     raise ValueError("implementation for set_level not implemented")
 
-  def turn_on(self):
+  async def turn_on(self):
     """
     Implement to turn on the device.
     :return:
     """
     raise ValueError("implementation for turn_on not implemented")
 
-  def turn_off(self):
+  async def turn_off(self):
     """
     Implement to turn off device
     :return:
@@ -76,7 +76,7 @@ class GenericDimmer(IpcdClient.Device):
 
     return int(level)
 
-  def set_values(self, values):
+  async def set_values(self, values):
     """
     Called when the user changes something in Arcus
     :param values:
@@ -84,9 +84,9 @@ class GenericDimmer(IpcdClient.Device):
     """
     if 'generic.switch' in values:
       if values['generic.switch'] == 'on':
-        self.turn_on()
+        await self.turn_on()
       elif values['generic.switch'] == 'off':
-        self.turn_off()
+        await self.turn_off()
     if 'generic.brightness' in values:
       self.set_level(values['generic.brightness'])
 
@@ -100,14 +100,14 @@ class GenericSwitch(IpcdClient.Device):
     super(GenericSwitch, self).__init__('Generic', 'Switch', serial)
 
   # BEGIN: hw implements
-  def turn_on(self):
+  async def turn_on(self):
     """
     Implement to turn on the device.
     :return:
     """
     raise ValueError("implementation for turn_on not implemented")
 
-  def turn_off(self):
+  async def turn_off(self):
     """
     Implement to turn off device
     :return:
@@ -134,7 +134,7 @@ class GenericSwitch(IpcdClient.Device):
       self.on = False
       self.get_client().on_value_change(self, [{'parameter': 'generic.switch', 'value': 'off'}])
 
-  def set_values(self, values):
+  async def set_values(self, values):
     """
     Called when the user changes something in Arcus
     :param values:
@@ -142,6 +142,6 @@ class GenericSwitch(IpcdClient.Device):
     """
     if 'generic.switch' in values:
       if values['generic.switch'] == 'on':
-        self.turn_on()
+        await self.turn_on()
       elif values['generic.switch'] == 'off':
-        self.turn_off()
+        await self.turn_off()

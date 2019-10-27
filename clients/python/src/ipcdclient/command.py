@@ -52,8 +52,8 @@ class SetParameterValuesCommand(IpcdCommand):
     self.values = values
     self.txnid = txnid
 
-  def apply(self, device):
-    device.set_values(self.values)
+  async def apply(self, device):
+    await device.set_values(self.values)
 
 
 class SetReportConfigurationCommand(IpcdCommand):

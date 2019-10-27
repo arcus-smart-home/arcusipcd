@@ -72,7 +72,8 @@ class IpcdClient(object):
       :param message:
       :return:
       """
-      from_payload(message).apply(self)
+      cmd = from_payload(message)
+      await cmd.apply(self)
 
   def __init__(self, hostname):
     _validate_hostname(hostname)

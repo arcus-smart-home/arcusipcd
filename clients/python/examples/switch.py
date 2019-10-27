@@ -1,19 +1,25 @@
 #!/usr/bin/env python3
 
+import urllib3
+import asyncio
 import logging
-import time
 
 from ipcdclient.client import IpcdClient
 from ipcdclient.device import GenericSwitch
 
 
 class FakeGenericSwitch(GenericSwitch):
-  def turn_off(self):
-    time.sleep(2)
+  async def turn_off(self):
+    print("got a request to turn off. let's pretend this takes two seconds IRL")
+    await asyncio.sleep(2)
+
+    print("reporting off")
     self.report_off()
 
-  def turn_on(self):
-    time.sleep(2)
+  async def turn_on(self):
+    print("got a request to turn on. let's pretend this takes two seconds IRL")
+    await asyncio.sleep(2)
+    print("reporting on!")
     self.report_on()
 
 
@@ -38,13 +44,15 @@ def main():
 
   # The device knows which client is using it, and can also automatically communicate.
 
-  while True:
-    device.turn_on()
+  async def run_forever():
+    while True:
+      await device.turn_on()
 
-    time.sleep(4)
+      await asyncio.sleep(4)
 
-    device.turn_off()
+      await device.turn_off()
 
+  asyncio.run(run_forever())
 
 if __name__ == "__main__":
   main()
