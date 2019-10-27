@@ -30,7 +30,8 @@ class GetParameterInfoCommand(IpcdCommand):
 
 
 class GetParameterValuesCommand(IpcdCommand):
-  pass
+  def __init__(self, txnid):
+    pass
 
 
 class LeaveCommand(IpcdCommand):
