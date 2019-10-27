@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 packages = ['ipcdclient']
 
 setuptools.setup(
-     name='arcusipcd',
+     name='ipcdclient',
      version='0.0.1',
      scripts=[] ,
      author="Andrew Sorensen",
@@ -16,7 +16,7 @@ setuptools.setup(
      long_description_content_type="text/markdown",
      url="https://github.com/arcus-smart-home/arcusipcd",
      packages=packages,
-     package_dir = {'': 'src'},
+     package_dir={'': 'src'},
      install_requires=[
        'urllib3[secure]',
        'websockets',
