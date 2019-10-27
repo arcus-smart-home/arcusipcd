@@ -169,6 +169,7 @@ class IpcdClient(object):
           while True:
             msg = await self.queue.get()
             await websocket.send(msg)
+            self.queue.task_done()
 
         loop.create_task(reader(websocket))
         loop.create_task(writer(websocket))
@@ -179,8 +180,8 @@ class IpcdClient(object):
       asyncio.set_event_loop(loop)
       loop.run_until_complete(connect_loop())
 
-    loop = asyncio.get_event_loop()
-    t = threading.Thread(target=loop_in_thread, args=(loop,))
+    self.loop = asyncio.get_event_loop()
+    t = threading.Thread(target=loop_in_thread, args=(self.loop,))
     t.start()
 
   def disconnect(self):
@@ -218,7 +219,7 @@ class IpcdClient(object):
 
     payload = json.dumps(data)
     self.logger.info("putting %s on the queue", payload)
-    self.queue.put_nowait(payload)
+    self.loop.call_soon_threadsafe(self.queue.put_nowait, payload)
 
   def report(self, device, message):
     """
