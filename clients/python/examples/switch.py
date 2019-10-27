@@ -9,6 +9,10 @@ from ipcdclient.device import GenericSwitch
 
 
 class FakeGenericSwitch(GenericSwitch):
+  """
+  A simple fake switch. You should copy this example and replace the stubs with something that actually does something.
+  You should only call the report_* methods after the hardware reflects the requested state.
+  """
   async def turn_off(self):
     print("got a request to turn off. let's pretend this takes two seconds IRL")
     await asyncio.sleep(2)
@@ -42,8 +46,7 @@ def main():
     'parameter': 'generic.switch', 'value': 'on'
   }])
 
-  # The device knows which client is using it, and can also automatically communicate.
-
+  # Simulate a user turning the switch on and off every few seconds
   async def run_forever():
     while True:
       await device.turn_on()
