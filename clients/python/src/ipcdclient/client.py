@@ -5,6 +5,7 @@ import urllib3
 import websockets
 import logging
 import threading
+from enum import Enum
 
 from .command import from_payload
 
@@ -74,6 +75,23 @@ class IpcdClient(object):
       """
       cmd = from_payload(message)
       await cmd.apply(self)
+
+
+  class InternalMessage(object):
+    class InternalMessageType(Enum):
+      MESSAGE = 1
+      DISCONNECT = 2
+
+    def __init__(self, type, payload):
+      self.type = type
+      self.payload = payload
+
+    def is_type(self, type):
+      return self.type is type
+
+    def get_payload(self):
+      return self.payload
+
 
   def __init__(self, hostname):
     _validate_hostname(hostname)
@@ -169,11 +187,20 @@ class IpcdClient(object):
         async def writer(websocket):
           while True:
             msg = await self.queue.get()
-            await websocket.send(msg)
+            if msg.is_type(self.InternalMessage.InternalMessageType.MESSAGE):
+              await websocket.send(msg.payload)
+            elif msg.is_type(self.InternalMessage.InternalMessageType.DISCONNECT):
+              self.logger.info('disconnecting')
+              self.logger.debug('tearing down reader')
+              self.reader.cancel()
+              await websocket.close()
+              self.writer.cancel()
+            else:
+              self.logger.warn('unhandled message type')
             self.queue.task_done()
 
-        loop.create_task(reader(websocket))
-        loop.create_task(writer(websocket))
+        self.reader = loop.create_task(reader(websocket))
+        self.writer = loop.create_task(writer(websocket))
 
         await websocket.wait_closed()
 
@@ -186,7 +213,13 @@ class IpcdClient(object):
     t.start()
 
   def disconnect(self):
-    pass  # TODO
+    self.logger.info('Sending disconnect request')
+    msg = self.InternalMessage(
+      self.InternalMessage.InternalMessageType.DISCONNECT,
+      None  # For disconnect
+    )
+
+    self.loop.call_soon_threadsafe(self.queue.put_nowait, msg)
 
   def send(self, device, message):
     """
@@ -220,7 +253,12 @@ class IpcdClient(object):
 
     payload = json.dumps(data)
     self.logger.info("putting %s on the queue", payload)
-    self.loop.call_soon_threadsafe(self.queue.put_nowait, payload)
+    msg = self.InternalMessage(
+      self.InternalMessage.InternalMessageType.MESSAGE,
+      payload
+    )
+
+    self.loop.call_soon_threadsafe(self.queue.put_nowait, msg)
 
   def report(self, device, message):
     """
@@ -244,7 +282,12 @@ class IpcdClient(object):
 
     payload = json.dumps(data)
     self.logger.info("report: putting %s on the queue", payload)
-    self.queue.put_nowait(payload)
+    msg = self.InternalMessage(
+      self.InternalMessage.InternalMessageType.MESSAGE,
+      payload
+    )
+
+    self.loop.call_soon_threadsafe(self.queue.put_nowait, msg)
 
   def is_connected(self):
     return self.state == 'CONNECTED' or self.state == 'CONNECTING'
