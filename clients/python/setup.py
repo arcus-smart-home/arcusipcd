@@ -1,6 +1,9 @@
 import setuptools
+
 with open("README.md", "r") as fh:
     long_description = fh.read()
+
+packages = ['ipcdclient']
 
 setuptools.setup(
      name='arcusipcd',
@@ -12,7 +15,8 @@ setuptools.setup(
      long_description=long_description,
      long_description_content_type="text/markdown",
      url="https://github.com/arcus-smart-home/arcusipcd",
-     packages=setuptools.find_packages(),
+     packages=packages,
+     package_dir = {'': 'src'},
      classifiers=[
        'Intended Audience :: Developers',
        'License :: OSI Approved :: Apache Software License',
