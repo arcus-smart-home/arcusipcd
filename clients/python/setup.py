@@ -7,7 +7,7 @@ packages = ['ipcdclient']
 
 setuptools.setup(
      name='arcusipcd',
-     version='0.1',
+     version='0.0.1',
      scripts=[] ,
      author="Andrew Sorensen",
      author_email="andrew@andrewsorensen.net",
@@ -17,6 +17,11 @@ setuptools.setup(
      url="https://github.com/arcus-smart-home/arcusipcd",
      packages=packages,
      package_dir = {'': 'src'},
+     install_requires=[
+       'urllib3[secure]',
+       'websockets',
+       'certifi'
+     ],
      classifiers=[
        'Intended Audience :: Developers',
        'License :: OSI Approved :: Apache Software License',
