@@ -13,23 +13,22 @@ def main():
   logger.addHandler(ch)
 
   client = IpcdClient('wss://arcus.example.com')
-  device = IpcdClient.Device('Generic', 'ContactSensor', '123457')
+  device = IpcdClient.Device('Generic', 'PresenceSensor', '12345678')
+
   client.add_device(device)
 
   client.connect()
 
-  logger.info("marking contact as closed")
+  logger.info("marking device as present")
 
   client.on_value_change(device, [{
-    'parameter': 'generic.contact', 'value': 'closed'
+    'parameter': 'generic.presence', 'value': 'present'
   }])
 
   client.on_value_change(device, [{
-    'parameter': 'generic.contact', 'value': 'opened'
+    'parameter': 'generic.presence', 'value': 'absent'
   }])
 
-
-  client.report(device, {"generic.contact": "closed"})
   client.disconnect()
 
 if __name__ == "__main__":
