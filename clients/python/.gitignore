@@ -1,3 +1,4 @@
-arcusipcd.egg-info
-build
 dist
+*.egg-info
+*.pyc
+__pycache__
