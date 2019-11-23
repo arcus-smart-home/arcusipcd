@@ -13,4 +13,22 @@ jar {
     from sharedManifest
   }  
 }
+publishing {
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = uri("https://maven.pkg.github.com/" + (System.getenv("GITHUB_REPOSITORY") ?: System.getenv("TRAVIS_REPO_SLUG")))
+      credentials {
+        username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+        password = project.findProperty("gpr.key") ?: System.getenv("PASSWORD")
+      }
+    }
+  }
+
+  publications {
+    gpr(MavenPublication) {
+      from(components.java)
+    }
+  }
+}
 
