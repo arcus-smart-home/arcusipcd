@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -cp ".:config/:lib/*" com.iris.ipcd.server.IpcdServer
+java -cp ".:config/:lib/*" com.arcussmarthome.ipcd.server.IpcdServer

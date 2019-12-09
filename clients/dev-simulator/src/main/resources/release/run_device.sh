@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -cp ".:devices/:config/:lib/*" com.iris.ipcd.client.comm.IpcdClient $1 $2
+java -cp ".:devices/:config/:lib/*" com.arcussmarthome.ipcd.client.comm.IpcdClient $1 $2

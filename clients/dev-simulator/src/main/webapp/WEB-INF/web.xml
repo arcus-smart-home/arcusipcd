@@ -9,7 +9,7 @@
 		<load-on-startup>1</load-on-startup>
 		<init-param>
 			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>com.iris.ipcd.client.api;com.wordnik.swagger.jersey.listing</param-value>
+			<param-value>com.arcussmarthome.ipcd.client.api;com.wordnik.swagger.jersey.listing</param-value>
 		</init-param>
 	</servlet>
 
