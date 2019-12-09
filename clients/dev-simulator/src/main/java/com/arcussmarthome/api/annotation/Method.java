@@ -1,4 +1,4 @@
-package com.iris.api.annotation;
+package com.arcussmarthome.api.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
