@@ -1,9 +1,7 @@
-package com.iris.server.apmode;
+package com.arcussmarthome.server.apmode;
 
 import java.security.KeyFactory;
-import java.security.PrivateKey;
 import java.security.Security;
-import java.security.spec.InvalidKeySpecException;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 

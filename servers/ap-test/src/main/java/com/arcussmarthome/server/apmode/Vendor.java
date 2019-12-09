@@ -1,4 +1,4 @@
-package com.iris.server.apmode;
+package com.arcussmarthome.server.apmode;
 
 public class Vendor {
 	private final String vendor = "GreatStar";

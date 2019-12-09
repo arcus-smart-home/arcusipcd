@@ -1,4 +1,4 @@
-package com.iris.server.apmode.rsa;
+package com.arcussmarthome.server.apmode.rsa;
 
 public class PiecedCert {
 	private String n = "00:eb:0f:f9:4c:5a:4f:93:2d:52:67:57:e4:92:8a:"+

@@ -1,7 +1,7 @@
 
-package com.iris.server.apmode;
+package com.arcussmarthome.server.apmode;
 
-import com.iris.server.apmode.rsa.RSA_Decryptor;
+import com.arcussmarthome.server.apmode.rsa.RSA_Decryptor;
 
 public class EncryptedNetwork {
 	private String ssid;

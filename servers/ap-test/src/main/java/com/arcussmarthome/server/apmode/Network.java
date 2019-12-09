@@ -1,4 +1,4 @@
-package com.iris.server.apmode;
+package com.arcussmarthome.server.apmode;
 
 	public class Network{ 
 		private String ssid;

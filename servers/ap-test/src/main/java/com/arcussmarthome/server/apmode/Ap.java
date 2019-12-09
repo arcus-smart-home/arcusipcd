@@ -1,4 +1,4 @@
-package com.iris.server.apmode;
+package com.arcussmarthome.server.apmode;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

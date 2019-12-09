@@ -1,4 +1,4 @@
-package com.iris.server.apmode;
+package com.arcussmarthome.server.apmode;
 
 public class Status {
 	private final String status = "DISCONNECTED";

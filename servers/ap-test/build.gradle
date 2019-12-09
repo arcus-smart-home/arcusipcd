@@ -19,7 +19,7 @@ dependencies {
 	compile ("org.bouncycastle:bcprov-jdk15on:1.59")
 }
 
-mainClassName = 'com.iris.server.apmode.Ap'
+mainClassName = 'com.arcussmarthome.server.apmode.Ap'
 
 bootJar {
 	baseName = 'ap-test'
