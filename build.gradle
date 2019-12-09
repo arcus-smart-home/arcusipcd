@@ -20,7 +20,7 @@ subprojects {
         'nl.jqno.equalsverifier:equalsverifier:1.5'
   }
 
-  group = 'com.iris'
+  group = 'com.arcussmarthome'
   version = '1.1.0-SNAPSHOT'
 
   // Shared manifest for all jar files
