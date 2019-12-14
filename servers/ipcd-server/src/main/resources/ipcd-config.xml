@@ -40,13 +40,13 @@
 		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
 		<property name="customEditors">
 			<map>
-				<entry key="java.net.InetSocketAddress" value="com.iris.ipcd.server.spring.InetSocketAddressEditor" />
+				<entry key="java.net.InetSocketAddress" value="com.arcussmarthome.ipcd.server.spring.InetSocketAddressEditor" />
 			</map>
 		</property>
 	</bean>
 
 	<!-- Server definition -->
-	<bean id="Server" class="com.iris.ipcd.server.IpcdServer"
+	<bean id="Server" class="com.arcussmarthome.ipcd.server.IpcdServer"
 	    p:socketBindAddress="${bind.address}"
 	    p:portNumber="${tcp.port}"
 		p:bossGroup-ref="bossGroup" 
@@ -58,14 +58,14 @@
 	<!-- If you prefer to use the system's default keystore file path and password as encoded
 	     in System.getProperties("keystore.file.path") and System.getProperties("keystore.file.password")
 	     then remove the constructor args below to call the no argument ctor -->
-	<bean id="ipcdServerTlsContext" class="com.iris.ipcd.server.netty.IpcdServerTlsContext">
+	<bean id="ipcdServerTlsContext" class="com.arcussmarthome.ipcd.server.netty.IpcdServerTlsContext">
 	     <constructor-arg index="0" value="${tls.server}" />
 	    <constructor-arg index="1" value="${tls.server.keystore.filepath}" />
 	    <constructor-arg index="2" value="${tls.server.keystore.password}" />
 	    <constructor-arg index="3" value="${tls.server.key.password}" />
 	</bean>
 	
-	<bean id="ipcd10ChannelInitializer" class="com.iris.ipcd.server.netty.Ipcd10ChannelInitializer">
+	<bean id="ipcd10ChannelInitializer" class="com.arcussmarthome.ipcd.server.netty.Ipcd10ChannelInitializer">
 	    <constructor-arg index="0" ref="ipcdServerTlsContext" />
 	</bean>
 	
@@ -92,10 +92,10 @@
 		<constructor-arg index="0" value="${worker.thread.count}" />
 		<constructor-arg index="1" ref="workerThreadFactory" />
 	</bean>
-	<bean id="bossThreadFactory" class="com.iris.ipcd.server.thread.DaemonThreadFactory">
+	<bean id="bossThreadFactory" class="com.arcussmarthome.ipcd.server.thread.DaemonThreadFactory">
 		<constructor-arg index="0" value="ipcds-boss" />
 	</bean>
-	<bean id="workerThreadFactory" class="com.iris.ipcd.server.thread.DaemonThreadFactory">
+	<bean id="workerThreadFactory" class="com.arcussmarthome.ipcd.server.thread.DaemonThreadFactory">
 		<constructor-arg index="0" value="ipcds-worker" />
 		
 	</bean>
